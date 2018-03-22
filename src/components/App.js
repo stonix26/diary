@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { db } from '../firebase';
 
 class App extends Component {
 
@@ -11,11 +12,29 @@ class App extends Component {
     }
     // Bind
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // Handle change
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
+    });
+  }
+
+  // Handle submit
+  handleSubmit(event) {
+    event.preventDefault();
+    // console.log('Submitted');
+    const note = {
+      title: this.state.title,
+      body: this.state.body
+    }
+    db.push(note);
+    // Clear after submit
+    this.setState({
+      title: '',
+      body: ''
     });
   }
 
@@ -24,10 +43,11 @@ class App extends Component {
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-6 col-sm-offset-3">
-            <form>
+            <form onSubmit = {this.handleSubmit}>
               <div className="form-group">
                 <input
                   onChange = {this.handleChange}
+                  value = {this.state.title}
                   type="text"
                   name="title"
                   className="form-control no-border"
@@ -39,6 +59,7 @@ class App extends Component {
               <div className="form-group">
                 <textarea
                   onChange = {this.handleChange}
+                  value = {this.state.body}
                   type="text"
                   name="body"
                   className="form-control no-border"
