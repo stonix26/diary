@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 
-// Create redux store -> reducers -> 'actions' | applyMiddleWare()
+// Create redux store -> reducers -> 'actions - actionType' | applyMiddleWare()
 
 const store = createStore(composeWithDevTools());
 
